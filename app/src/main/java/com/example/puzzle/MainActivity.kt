@@ -9,37 +9,79 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.ContactsContract
+import android.util.Log
 import android.view.DragEvent
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import java.util.*
+import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
-    lateinit var textView: TextView
-    lateinit var textView2: TextView
+    var dropListeners: ArrayList<ImageView> = arrayListOf()
+    var dropImages: ArrayList<Int> = arrayListOf(
+        R.drawable.row_1_column_1, R.drawable.row_1_column_2, R.drawable.row_1_column_3, R.drawable.row_1_column_4,
+        R.drawable.row_2_column_1, R.drawable.row_2_column_2, R.drawable.row_2_column_3, R.drawable.row_2_column_4,
+        R.drawable.row_3_column_1, R.drawable.row_3_column_2, R.drawable.row_3_column_3, R.drawable.row_3_column_4,
+        R.drawable.row_4_column_1, R.drawable.row_4_column_2, R.drawable.row_4_column_3, R.drawable.row_4_column_4
+    )
+    var notSetImages: ArrayList<Int> = arrayListOf(
+        R.drawable.row_1_column_1, R.drawable.row_1_column_2, R.drawable.row_1_column_3, R.drawable.row_1_column_4,
+        R.drawable.row_2_column_1, R.drawable.row_2_column_2, R.drawable.row_2_column_3, R.drawable.row_2_column_4,
+        R.drawable.row_3_column_1, R.drawable.row_3_column_2, R.drawable.row_3_column_3, R.drawable.row_3_column_4,
+        R.drawable.row_4_column_1, R.drawable.row_4_column_2, R.drawable.row_4_column_3, R.drawable.row_4_column_4
+    )
+    lateinit var toDropImage: ImageView
+
+    fun getIdOfImageForImageView(imageView: ImageView): Int {
+        var inx = dropListeners.indexOf(imageView)
+        return dropImages[inx]
+    }
+
+    fun setNextImage() {
+        if (notSetImages.size == 0) {
+            toDropImage.setImageResource(R.drawable.ic_empty_image)
+            return
+        }
+        val randomNumber = Random().nextInt(notSetImages.size)
+        toDropImage.setImageResource(notSetImages[randomNumber])
+        Log.i(null, "" + dropImages.indexOf(notSetImages[randomNumber]))
+        toDropImage.tag = randomNumber
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        textView = findViewById(R.id.textView)
-        textView2 = findViewById(R.id.textView2)
+        toDropImage = findViewById(R.id.imageView_toDrop)
+        dropListeners.add(findViewById(R.id.imageView_r1c1))
+        dropListeners.add(findViewById(R.id.imageView_r1c2))
+        dropListeners.add(findViewById(R.id.imageView_r1c3))
+        dropListeners.add(findViewById(R.id.imageView_r1c4))
+        dropListeners.add(findViewById(R.id.imageView_r2c1))
+        dropListeners.add(findViewById(R.id.imageView_r2c2))
+        dropListeners.add(findViewById(R.id.imageView_r2c3))
+        dropListeners.add(findViewById(R.id.imageView_r2c4))
+        dropListeners.add(findViewById(R.id.imageView_r3c1))
+        dropListeners.add(findViewById(R.id.imageView_r3c2))
+        dropListeners.add(findViewById(R.id.imageView_r3c3))
+        dropListeners.add(findViewById(R.id.imageView_r3c4))
+        dropListeners.add(findViewById(R.id.imageView_r4c1))
+        dropListeners.add(findViewById(R.id.imageView_r4c2))
+        dropListeners.add(findViewById(R.id.imageView_r4c3))
+        dropListeners.add(findViewById(R.id.imageView_r4c4))
 
-        val randomNumber = Random().nextInt(100)
-        textView.text = "$randomNumber"
-        textView.tag = textView.text
-
-        textView.setOnClickListener {v->
-            val randomNumber = Random().nextInt(100)
-            (v as TextView).text = "$randomNumber"
-            (v as TextView).tag = (v as TextView).text
+        setNextImage()
+        toDropImage.setOnClickListener { v ->
+            setNextImage()
         }
 
-        textView.setOnLongClickListener { v:View ->
-            val item = ClipData.Item(v.tag as? CharSequence)
+        toDropImage.setOnLongClickListener { v:View ->
+            val item = ClipData.Item(toDropImage.id as? CharSequence)
 
             val dragData = ClipData(
-                v.tag as CharSequence,
+                "imageId",
                 arrayOf(ClipDescription.MIMETYPE_TEXT_PLAIN),
                 item
             )
@@ -47,13 +89,16 @@ class MainActivity : AppCompatActivity() {
             val myShadow = MyDragShadowBuilder(v)
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                v.startDragAndDrop(dragData,myShadow,null,0)
-            }else{
-                v.startDrag(dragData,myShadow,null,0)
+                v.startDragAndDrop(dragData, myShadow,null,0)
+            } else{
+                v.startDrag(dragData, myShadow,null,0)
             }
         }
 
-        textView2.setOnDragListener(dragListen)
+//        textView2.setOnDragListener(dragListen)
+        for (imv in dropListeners) {
+            imv.setOnDragListener(imageDragListener)
+        }
     }
 
 
@@ -75,72 +120,56 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
     // Creates a new drag event listener
-    private val dragListen = View.OnDragListener { v, event ->
-        val receiverView: TextView = v as TextView
+    private val imageDragListener = View.OnDragListener { v, event ->
+        val imageView: ImageView = v as ImageView
+        var dragedImageInx: Int = toDropImage.tag as Int
+        var imageThatShouldBeDroped = getIdOfImageForImageView(imageView)
 
-        when (event.action) {
-            DragEvent.ACTION_DRAG_STARTED -> {
-                if (event.clipDescription.hasMimeType(ClipDescription.MIMETYPE_TEXT_PLAIN)) {
-                    receiverView.setBackgroundColor(Color.CYAN)
-                    receiverView.text = "Hold and drag here."
-                    v.invalidate()
+        if (notSetImages.contains(imageThatShouldBeDroped)) {
+            when (event.action) {
+                DragEvent.ACTION_DRAG_STARTED -> {
                     true
-                } else {
+                }
+
+                DragEvent.ACTION_DRAG_ENTERED -> {
+                    imageView.setImageResource(R.drawable.ic_input)
+                    true
+                }
+
+                DragEvent.ACTION_DRAG_LOCATION ->
+                    true
+
+                DragEvent.ACTION_DRAG_EXITED -> {
+                    imageView.setImageResource(R.drawable.ic_empty_image)
+                    true
+                }
+
+                DragEvent.ACTION_DROP -> {
+                    if (imageThatShouldBeDroped == notSetImages[dragedImageInx]) {
+                        imageView.setImageResource(notSetImages[dragedImageInx])
+                        notSetImages.remove(notSetImages[dragedImageInx])
+                        imageView.setBackgroundColor(Color.BLUE)
+                        setNextImage()
+                    }
+                    else {
+//                        imageView.setBackgroundColor(0x00000000)
+                        imageView.setImageResource(R.drawable.ic_empty_image)
+                    }
+                    true
+                }
+
+                DragEvent.ACTION_DRAG_ENDED -> {
+                    true
+                }
+
+                else -> {
+                    // An unknown action type was received.
                     false
                 }
             }
-
-            DragEvent.ACTION_DRAG_ENTERED -> {
-                receiverView.setBackgroundColor(Color.GREEN)
-                receiverView.text = "Good, put here."
-                v.invalidate()
-                true
-            }
-
-            DragEvent.ACTION_DRAG_LOCATION ->
-                true
-
-            DragEvent.ACTION_DRAG_EXITED -> {
-                receiverView.setBackgroundColor(Color.YELLOW)
-                receiverView.text = "Oh! you exited."
-                v.invalidate()
-                true
-            }
-
-            DragEvent.ACTION_DROP -> {
-                val item: ClipData.Item = event.clipData.getItemAt(0)
-                val dragData = item.text
-                receiverView.text = "You dropped : $dragData"
-                v.invalidate()
-                true
-            }
-
-            DragEvent.ACTION_DRAG_ENDED -> {
-                receiverView.setBackgroundColor(Color.WHITE)
-                v.invalidate()
-
-
-                when(event.result) {
-                    true ->
-                        // drop was handled
-                        receiverView.setBackgroundColor(Color.WHITE)
-                    else ->{
-                        // drop didn't work
-                        receiverView.text = "Drop failed."
-                        receiverView.setBackgroundColor(Color.RED)
-                    }
-                }
-
-                // returns true; the value is ignored.
-                true
-            }
-
-            else -> {
-                // An unknown action type was received.
-                false
-            }
         }
+
+        true
     }
 }
