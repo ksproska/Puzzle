@@ -42,6 +42,7 @@ class MainActivity : AppCompatActivity() {
     )
     lateinit var toDropImage: ImageView
     var currentImageInx: Int = -1
+    var mediaPlayer: MediaPlayer? = null
 
     fun getIdOfImageForImageView(imageView: ImageView): Int {
         var inx = toDropImages.indexOf(imageView)
@@ -49,6 +50,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun setNextImage() {
+        if (mediaPlayer != null) {
+            mediaPlayer!!.release()
+        }
         if (notSetImageIds.size == 0) {
             toDropImage.setImageResource(R.drawable.ic_empty_image)
             running = false
@@ -163,13 +167,15 @@ class MainActivity : AppCompatActivity() {
                         currentlySetImageIds.set(allToDropImageIds.indexOf(imageThatShouldBeDroped), notSetImageIds[dragedImageInx])
                         imageView.setImageResource(notSetImageIds[dragedImageInx])
                         notSetImageIds.remove(notSetImageIds[dragedImageInx])
-                        MediaPlayer.create(this, R.raw.correct).start()
                         setNextImage()
+                        mediaPlayer = MediaPlayer.create(this, R.raw.correct)
+                        mediaPlayer!!.start()
                     }
                     else {
                         imageView.setImageResource(R.drawable.ic_not_correct)
                         currentlySetImageIds.set(toDropImages.indexOf(imageView), R.drawable.ic_not_correct)
-                        MediaPlayer.create(this, R.raw.wrong).start()
+                        mediaPlayer = MediaPlayer.create(this, R.raw.wrong)
+                        mediaPlayer!!.start()
                     }
                     true
                 }
