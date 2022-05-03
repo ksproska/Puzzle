@@ -35,28 +35,28 @@
                 android:layout_width="0dp"
                 android:layout_height="100dp"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/ic_empty_image"/>
+                app:srcCompat="@drawable/ic_simple_square"/>
 
             <ImageView
                 android:id="@+id/imageView_r1c2"
                 android:layout_width="0dp"
                 android:layout_height="100dp"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/ic_empty_image" />
+                app:srcCompat="@drawable/ic_simple_square" />
 
             <ImageView
                 android:id="@+id/imageView_r1c3"
                 android:layout_width="0dp"
                 android:layout_height="100dp"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/ic_empty_image"/>
+                app:srcCompat="@drawable/ic_simple_square"/>
 
             <ImageView
                 android:id="@+id/imageView_r1c4"
                 android:layout_width="0dp"
                 android:layout_height="100dp"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/ic_empty_image"/>
+                app:srcCompat="@drawable/ic_simple_square"/>
 
         </TableRow>
 
@@ -70,28 +70,28 @@
                 android:layout_width="0dp"
                 android:layout_height="100dp"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/ic_empty_image"/>
+                app:srcCompat="@drawable/ic_simple_square"/>
 
             <ImageView
                 android:id="@+id/imageView_r2c2"
                 android:layout_width="0dp"
                 android:layout_height="100dp"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/ic_empty_image" />
+                app:srcCompat="@drawable/ic_simple_square" />
 
             <ImageView
                 android:id="@+id/imageView_r2c3"
                 android:layout_width="0dp"
                 android:layout_height="100dp"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/ic_empty_image"/>
+                app:srcCompat="@drawable/ic_simple_square"/>
 
             <ImageView
                 android:id="@+id/imageView_r2c4"
                 android:layout_width="0dp"
                 android:layout_height="100dp"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/ic_empty_image"/>
+                app:srcCompat="@drawable/ic_simple_square"/>
 
         </TableRow>
 
@@ -106,28 +106,28 @@
                 android:layout_width="0dp"
                 android:layout_height="100dp"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/ic_empty_image"/>
+                app:srcCompat="@drawable/ic_simple_square"/>
 
             <ImageView
                 android:id="@+id/imageView_r3c2"
                 android:layout_width="0dp"
                 android:layout_height="100dp"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/ic_empty_image"/>
+                app:srcCompat="@drawable/ic_simple_square"/>
 
             <ImageView
                 android:id="@+id/imageView_r3c3"
                 android:layout_width="0dp"
                 android:layout_height="100dp"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/ic_empty_image" />
+                app:srcCompat="@drawable/ic_simple_square" />
 
             <ImageView
                 android:id="@+id/imageView_r3c4"
                 android:layout_width="0dp"
                 android:layout_height="100dp"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/ic_empty_image"/>
+                app:srcCompat="@drawable/ic_simple_square"/>
 
         </TableRow>
 
@@ -141,28 +141,28 @@
                 android:layout_width="0dp"
                 android:layout_height="100dp"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/ic_empty_image"/>
+                app:srcCompat="@drawable/ic_simple_square"/>
 
             <ImageView
                 android:id="@+id/imageView_r4c2"
                 android:layout_width="0dp"
                 android:layout_height="100dp"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/ic_empty_image"/>
+                app:srcCompat="@drawable/ic_simple_square"/>
 
             <ImageView
                 android:id="@+id/imageView_r4c3"
                 android:layout_width="0dp"
                 android:layout_height="100dp"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/ic_empty_image"/>
+                app:srcCompat="@drawable/ic_simple_square"/>
 
             <ImageView
                 android:id="@+id/imageView_r4c4"
                 android:layout_width="0dp"
                 android:layout_height="100dp"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/ic_empty_image"/>
+                app:srcCompat="@drawable/ic_simple_square"/>
 
         </TableRow>
 

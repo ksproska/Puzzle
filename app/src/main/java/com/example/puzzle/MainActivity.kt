@@ -9,12 +9,10 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.ContactsContract
 import android.util.Log
 import android.view.DragEvent
 import android.view.View
 import android.widget.ImageView
-import android.widget.TextView
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -32,7 +30,14 @@ class MainActivity : AppCompatActivity() {
         R.drawable.row_3_column_1, R.drawable.row_3_column_2, R.drawable.row_3_column_3, R.drawable.row_3_column_4,
         R.drawable.row_4_column_1, R.drawable.row_4_column_2, R.drawable.row_4_column_3, R.drawable.row_4_column_4
     )
+    var currentlySetImages: ArrayList<Int> = arrayListOf(
+        R.drawable.ic_simple_square, R.drawable.ic_simple_square, R.drawable.ic_simple_square, R.drawable.ic_simple_square, 
+        R.drawable.ic_simple_square, R.drawable.ic_simple_square, R.drawable.ic_simple_square, R.drawable.ic_simple_square, 
+        R.drawable.ic_simple_square, R.drawable.ic_simple_square, R.drawable.ic_simple_square, R.drawable.ic_simple_square,
+        R.drawable.ic_simple_square, R.drawable.ic_simple_square, R.drawable.ic_simple_square, R.drawable.ic_simple_square
+    )
     lateinit var toDropImage: ImageView
+    var currentImageInx: Int = -1
 
     fun getIdOfImageForImageView(imageView: ImageView): Int {
         var inx = dropListeners.indexOf(imageView)
@@ -48,6 +53,14 @@ class MainActivity : AppCompatActivity() {
         toDropImage.setImageResource(notSetImages[randomNumber])
         Log.i(null, "" + dropImages.indexOf(notSetImages[randomNumber]))
         toDropImage.tag = randomNumber
+        currentImageInx = dropImages.indexOf(notSetImages[randomNumber])
+        for (imageView in dropListeners) {
+            var currentImage = currentlySetImages[dropListeners.indexOf(imageView)]
+            if (currentImage == R.drawable.ic_not_correct) {
+                currentlySetImages.set(dropListeners.indexOf(imageView), R.drawable.ic_simple_square)
+            }
+            imageView.setImageResource(currentlySetImages[dropListeners.indexOf(imageView)])
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -86,7 +99,7 @@ class MainActivity : AppCompatActivity() {
                 item
             )
 
-            val myShadow = MyDragShadowBuilder(v)
+            val myShadow = MyDragShadowBuilder(v, dropImages[currentImageInx])
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 v.startDragAndDrop(dragData, myShadow,null,0)
@@ -102,14 +115,12 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    private class MyDragShadowBuilder(v: View) : View.DragShadowBuilder(v) {
-        private val shadow = ColorDrawable(Color.LTGRAY)
+    private class MyDragShadowBuilder(v: View, imageID: Int) : View.DragShadowBuilder(v) {
+        private val shadow = view.getResources().getDrawable(imageID, null)
 
         override fun onProvideShadowMetrics(size: Point, touch: Point) {
             val width: Int = (view.width / 1.2F).toInt()
             val height: Int = (view.height / 1.2F).toInt()
-            //val width: Int = view.width / 2
-            //val height: Int = view.height / 2
 
             shadow.setBounds(0, 0, width, height)
             size.set(width, height)
@@ -133,7 +144,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 DragEvent.ACTION_DRAG_ENTERED -> {
-                    imageView.setImageResource(R.drawable.ic_input)
+                    imageView.setImageDrawable(ColorDrawable(Color.WHITE))
                     true
                 }
 
@@ -141,20 +152,23 @@ class MainActivity : AppCompatActivity() {
                     true
 
                 DragEvent.ACTION_DRAG_EXITED -> {
-                    imageView.setImageResource(R.drawable.ic_empty_image)
+                    var imgInx = dropListeners.indexOf(imageView)
+                    imageView.setImageResource(currentlySetImages[imgInx])
                     true
                 }
 
                 DragEvent.ACTION_DROP -> {
                     if (imageThatShouldBeDroped == notSetImages[dragedImageInx]) {
+                        currentlySetImages.set(dropImages.indexOf(imageThatShouldBeDroped), notSetImages[dragedImageInx])
                         imageView.setImageResource(notSetImages[dragedImageInx])
                         notSetImages.remove(notSetImages[dragedImageInx])
-                        imageView.setBackgroundColor(Color.BLUE)
+//                        imageView.setBackgroundColor(Color.BLUE)
                         setNextImage()
                     }
                     else {
 //                        imageView.setBackgroundColor(0x00000000)
-                        imageView.setImageResource(R.drawable.ic_empty_image)
+                        imageView.setImageResource(R.drawable.ic_not_correct)
+                        currentlySetImages.set(dropListeners.indexOf(imageView), R.drawable.ic_not_correct)
                     }
                     true
                 }
