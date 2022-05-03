@@ -16,8 +16,13 @@ import android.widget.ImageView
 import java.util.*
 import kotlin.collections.ArrayList
 
+import android.os.Handler
+import android.widget.TextView
+
 class MainActivity : AppCompatActivity() {
     var dropListeners: ArrayList<ImageView> = arrayListOf()
+    var seconds = 0
+    var running = true
     var dropImages: ArrayList<Int> = arrayListOf(
         R.drawable.row_1_column_1, R.drawable.row_1_column_2, R.drawable.row_1_column_3, R.drawable.row_1_column_4,
         R.drawable.row_2_column_1, R.drawable.row_2_column_2, R.drawable.row_2_column_3, R.drawable.row_2_column_4,
@@ -47,6 +52,7 @@ class MainActivity : AppCompatActivity() {
     fun setNextImage() {
         if (notSetImages.size == 0) {
             toDropImage.setImageResource(R.drawable.ic_empty_image)
+            running = false
             return
         }
         val randomNumber = Random().nextInt(notSetImages.size)
@@ -86,6 +92,7 @@ class MainActivity : AppCompatActivity() {
         dropListeners.add(findViewById(R.id.imageView_r4c4))
 
         setNextImage()
+        runTimer()
         toDropImage.setOnClickListener { v ->
             setNextImage()
         }
@@ -144,7 +151,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 DragEvent.ACTION_DRAG_ENTERED -> {
-                    imageView.setImageDrawable(ColorDrawable(Color.WHITE))
+                    imageView.setImageDrawable(ColorDrawable(0x00000000))
                     true
                 }
 
@@ -185,5 +192,50 @@ class MainActivity : AppCompatActivity() {
         }
 
         true
+    }
+
+    private fun runTimer() {
+
+        // Get the text view.
+        val timeView: TextView = findViewById(R.id.stopperView)
+
+        // Creates a new Handler
+        val handler = Handler()
+
+        // Call the post() method,
+        // passing in a new Runnable.
+        // The post() method processes
+        // code without a delay,
+        // so the code in the Runnable
+        // will run almost immediately.
+        handler.post(object : Runnable {
+            override fun run() {
+                val hours: Int = seconds / 3600
+                val minutes: Int = seconds % 3600 / 60
+                val secs: Int = seconds % 60
+
+                // Format the seconds into hours, minutes,
+                // and seconds.
+                val time = String
+                    .format(
+                        Locale.getDefault(),
+                        "%d:%02d:%02d", hours,
+                        minutes, secs
+                    )
+
+                // Set the text view text.
+                timeView.text = time
+
+                // If running is true, increment the
+                // seconds variable.
+                if (running) {
+                    seconds++
+                }
+
+                // Post the code again
+                // with a delay of 1 second.
+                handler.postDelayed(this, 1000)
+            }
+        })
     }
 }

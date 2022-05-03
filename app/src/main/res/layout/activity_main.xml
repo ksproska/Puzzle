@@ -22,7 +22,8 @@
         android:layout_height="400dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
 
         <TableRow
@@ -35,13 +36,17 @@
                 android:layout_width="0dp"
                 android:layout_height="100dp"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/ic_simple_square"/>
+                android:padding="3dp"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/ic_simple_square" />
 
             <ImageView
                 android:id="@+id/imageView_r1c2"
                 android:layout_width="0dp"
                 android:layout_height="100dp"
                 android:layout_weight="1"
+                android:padding="3dp"
+                android:layout_gravity="center"
                 app:srcCompat="@drawable/ic_simple_square" />
 
             <ImageView
@@ -49,14 +54,18 @@
                 android:layout_width="0dp"
                 android:layout_height="100dp"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/ic_simple_square"/>
+                android:padding="3dp"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/ic_simple_square" />
 
             <ImageView
                 android:id="@+id/imageView_r1c4"
                 android:layout_width="0dp"
                 android:layout_height="100dp"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/ic_simple_square"/>
+                android:padding="3dp"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/ic_simple_square" />
 
         </TableRow>
 
@@ -70,13 +79,17 @@
                 android:layout_width="0dp"
                 android:layout_height="100dp"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/ic_simple_square"/>
+                android:padding="3dp"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/ic_simple_square" />
 
             <ImageView
                 android:id="@+id/imageView_r2c2"
                 android:layout_width="0dp"
                 android:layout_height="100dp"
                 android:layout_weight="1"
+                android:padding="3dp"
+                android:layout_gravity="center"
                 app:srcCompat="@drawable/ic_simple_square" />
 
             <ImageView
@@ -84,14 +97,18 @@
                 android:layout_width="0dp"
                 android:layout_height="100dp"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/ic_simple_square"/>
+                android:padding="3dp"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/ic_simple_square" />
 
             <ImageView
                 android:id="@+id/imageView_r2c4"
                 android:layout_width="0dp"
                 android:layout_height="100dp"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/ic_simple_square"/>
+                android:padding="3dp"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/ic_simple_square" />
 
         </TableRow>
 
@@ -106,20 +123,26 @@
                 android:layout_width="0dp"
                 android:layout_height="100dp"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/ic_simple_square"/>
+                android:padding="3dp"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/ic_simple_square" />
 
             <ImageView
                 android:id="@+id/imageView_r3c2"
                 android:layout_width="0dp"
                 android:layout_height="100dp"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/ic_simple_square"/>
+                android:padding="3dp"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/ic_simple_square" />
 
             <ImageView
                 android:id="@+id/imageView_r3c3"
                 android:layout_width="0dp"
                 android:layout_height="100dp"
                 android:layout_weight="1"
+                android:padding="3dp"
+                android:layout_gravity="center"
                 app:srcCompat="@drawable/ic_simple_square" />
 
             <ImageView
@@ -127,7 +150,9 @@
                 android:layout_width="0dp"
                 android:layout_height="100dp"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/ic_simple_square"/>
+                android:padding="3dp"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/ic_simple_square" />
 
         </TableRow>
 
@@ -141,32 +166,50 @@
                 android:layout_width="0dp"
                 android:layout_height="100dp"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/ic_simple_square"/>
+                android:padding="3dp"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/ic_simple_square" />
 
             <ImageView
                 android:id="@+id/imageView_r4c2"
                 android:layout_width="0dp"
                 android:layout_height="100dp"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/ic_simple_square"/>
+                android:padding="3dp"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/ic_simple_square" />
 
             <ImageView
                 android:id="@+id/imageView_r4c3"
                 android:layout_width="0dp"
                 android:layout_height="100dp"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/ic_simple_square"/>
+                android:padding="3dp"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/ic_simple_square" />
 
             <ImageView
                 android:id="@+id/imageView_r4c4"
                 android:layout_width="0dp"
                 android:layout_height="100dp"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/ic_simple_square"/>
+                android:padding="3dp"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/ic_simple_square" />
 
         </TableRow>
 
     </TableLayout>
+
+    <TextView
+        android:id="@+id/stopperView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Timer"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tableLayout" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
